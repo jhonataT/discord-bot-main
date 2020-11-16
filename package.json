@@ -1,0 +1,32 @@
+{
+  "name": "discord-bot-main",
+  "version": "1.0.0",
+  "description": "A generic bot for discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JhN-Te/discord-bot-main.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "discord",
+    "bot"
+  ],
+  "author": "Jhonata Tenório",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JhN-Te/discord-bot-main/issues"
+  },
+  "homepage": "https://github.com/JhN-Te/discord-bot-main#readme",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
+  }
+}
