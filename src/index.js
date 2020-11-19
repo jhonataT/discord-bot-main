@@ -2,24 +2,19 @@ if (process.version.slice(1).split('.')[0] < 8) throw new Error('Node 8.0.0 or h
 
 require('dotenv').config();
 
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const { Client } = require('discord.js');
+const client = new Client();
+const ping = require('./commands/ping')
+const serverInfo = require('./commands/serverInfo')
 const PREFIX = "!!"
 
-client.on('ready', () => {
-    // show members and servers numbers:
-    let membersSize = 0;
-    client.guilds.cache.map( (guild) => membersSize += guild.memberCount); 
-    console.log(`O BOT ESTÁ ONLINE EM [ ${client.guilds.cache.size} ] SERVERS. COM ${membersSize} MEMBROS`)
-    // change activity status
-    client.user.setPresence({
-        activity: { name: `[ ${client.guilds.cache.size} ] servidores.`, type: "WATCHING" },
-        status: 'READY' 
-    })
-});
+client.on('ready', readyDiscord);
 
-client.on("message", async (message) => {
+
+
+client.on("message", (message) => {
     if(message.author.bot) return;
+    if(message.channel.type !== "text") return;
     if(message.content.startsWith(PREFIX)){
         const [CMD_NAME, ...args] = message.content
         .trim()
@@ -28,12 +23,22 @@ client.on("message", async (message) => {
         
         console.log(args.length)
         
-        if(CMD_NAME === "ping" && args.length === 0){
-            console.log(`Latência da API: ${Math.round(client.ping)}ms.`)
-            const msg = await message.channel.send("Ping?");
-            msg.edit(`Latência: ${msg.createdTimestamp - message.createdTimestamp}ms.`)
-        }
+        if(CMD_NAME.toLowerCase() === "ping" && args.length === 0) ping(client, message);
+        else if(CMD_NAME.toLowerCase() === "server" && args.length === 0) 
+            serverInfo(client, message);
+
     }
 });
+
+function readyDiscord(){
+    let membersSize = 0;
+    client.guilds.cache.map( (guild) => membersSize += guild.memberCount); 
+    console.log(`O BOT ESTÁ ONLINE EM [ ${client.guilds.cache.size} ] SERVERS. COM ${membersSize} MEMBROS`)
+    // change activity status
+    client.user.setPresence({
+        activity: { name: `[ ${client.guilds.cache.size} ] servidores.`, type: "WATCHING" },
+        status: 'READY' 
+    });
+}
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
