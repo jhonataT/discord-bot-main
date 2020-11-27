@@ -1,12 +1,13 @@
-const { Client, MessageEmbed, GuildMemberManager } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 function serverInfo(client, message, embed = new MessageEmbed()){
     console.log("serverInfo");
     // send a MessageEmbed: 
     embed
-    .addField('Message', 'TESTANDO ELE') 
+    .setTitle(`Sobre  o  servidor  '${message.guild.name}':`)
     .setColor("#00FF7F")
-    .setTitle("TESTE DO TESTE DO TESTE");
+    .addField('Message', 'TESTANDO ELE') 
+    .addField('Message', 'TESTANDO ELA') 
 
     message.channel.send(embed);
     // console.log(client.guilds)
@@ -18,7 +19,8 @@ function serverInfo(client, message, embed = new MessageEmbed()){
 
 
 
-    console.log(message.guild.members.cache.map( (member) => member.user))
+    console.log(message.guild.members.cache.map( (member) => member.user));
+    // console.log(message.guild.presences.cache)
     // console.log(client.guilds);
 }
 

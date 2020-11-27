@@ -5,8 +5,8 @@ require('dotenv').config();
 const { Client } = require('discord.js');
 const client = new Client();
 const ping = require('./commands/ping')
-const serverInfo = require('./commands/serverInfo')
-const PREFIX = "!!"
+const hltv = require('./commands/hltvCommands') 
+const PREFIX = "!"
 
 client.on('ready', readyDiscord);
 
@@ -20,12 +20,13 @@ client.on("message", (message) => {
         .trim()
         .substring(PREFIX.length)
         .split(/\s+/);
-        
         console.log(args.length)
         
+        
         if(CMD_NAME.toLowerCase() === "ping" && args.length === 0) ping(client, message);
-        else if(CMD_NAME.toLowerCase() === "server" && args.length === 0) 
-            serverInfo(client, message);
+        else if(CMD_NAME.toLowerCase() === "team" && args.length != 0){
+            hltv.result(args.toString(), message);
+        }
 
     }
 });
